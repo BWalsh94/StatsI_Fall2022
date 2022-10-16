@@ -1,0 +1,211 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{graphicx,textcomp}
+\usepackage{natbib}
+\usepackage{setspace}
+\usepackage{fullpage}
+\usepackage{color}
+\usepackage[reqno]{amsmath}
+\usepackage{amsthm}
+\usepackage{fancyvrb}
+\usepackage{amssymb,enumerate}
+\usepackage[all]{xy}
+\usepackage{endnotes}
+\usepackage{lscape}
+\newtheorem{com}{Comment}
+\usepackage{float}
+\usepackage{hyperref}
+\newtheorem{lem} {Lemma}
+\newtheorem{prop}{Proposition}
+\newtheorem{thm}{Theorem}
+\newtheorem{defn}{Definition}
+\newtheorem{cor}{Corollary}
+\newtheorem{obs}{Observation}
+\usepackage[compact]{titlesec}
+\usepackage{dcolumn}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{multirow}
+\usepackage{xcolor}
+\newcolumntype{.}{D{.}{.}{-1}}
+\newcolumntype{d}[1]{D{.}{.}{#1}}
+\definecolor{light-gray}{gray}{0.65}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2
+}
+\lstset{style=mystyle}
+\newcommand{\Sref}[1]{Section~\ref{#1}}
+\newtheorem{hyp}{Hypothesis}
+
+\title{Problem Set 2}
+\date{Due: October 16, 2022}
+\author{Applied Stats/Quant Methods 1}
+
+\begin{document}
+	\maketitle
+	\section*{Instructions}
+	\begin{itemize}
+		\item Please show your work! You may lose points by simply writing in the answer. If the problem requires you to execute commands in \texttt{R}, please include the code you used to get your answers. Please also include the \texttt{.R} file that contains your code. If you are not sure if work needs to be shown for a particular problem, please ask.
+		\item Your homework should be submitted electronically on GitHub.
+		\item This problem set is due before 23:59 on Sunday October 16, 2022. No late assignments will be accepted.
+		\item Total available points for this homework is 80.
+	\end{itemize}
+	
+	
+	\vspace{.5cm}
+	\section*{Question 1 (40 points): Political Science}
+	\vspace{.25cm}
+	The following table was created using the data from a study run in a major Latin American city.\footnote{Fried, Lagunes, and Venkataramani (2010). ``Corruption and Inequality at the Crossroad: A Multimethod Study of Bribery and Discrimination in Latin America. \textit{Latin American Research Review}. 45 (1): 76-97.} As part of the experimental treatment in the study, one employee of the research team was chosen to make illegal left turns across traffic to draw the attention of the police officers on shift. Two employee drivers were upper class, two were lower class drivers, and the identity of the driver was randomly assigned per encounter. The researchers were interested in whether officers were more or less likely to solicit a bribe from drivers depending on their class (officers use phrases like, ``We can solve this the easy way'' to draw a bribe). The table below shows the resulting data.
+	
+	\newpage
+	\begin{table}[h!]
+		\centering
+		\begin{tabular}{l | c c c }
+			& Not Stopped & Bribe requested & Stopped/given warning \\
+			\\[-1.8ex] 
+			\hline \\[-1.8ex]
+			Upper class & 14 & 6 & 7 \\
+			Lower class & 7 & 7 & 1 \\
+			\hline
+		\end{tabular}
+	\end{table}
+	
+	\begin{enumerate}
+		
+		\item [(a)]
+		Calculate the $\chi^2$ test statistic by hand/manually (even better if you can do "by hand" in \texttt{R}).\\
+		
+		foUpper1 $\gets$ 14
+		
+		foUpper2 $\gets$ 6
+		
+		foUpper3 $\gets$ 7
+		
+		foLower1 $\gets$ 7
+		
+		foLower2 $\gets$ 7
+		
+		foLower3 $\gets$ 1
+		
+		Column1 $\gets$ sum(foUpper1, foLower1)
+		
+		Column2 $\gets$ sum(foUpper2, foLower2)
+		
+		Column3 $\gets$ sum(foUpper3, foLower3)
+		
+		Row1 $\gets$ sum(foUpper1, foUpper2, foUpper3), 
+		
+		Row2 $\gets$ sum(foLower1, foLower2, foLower3)
+		
+		Grand$\_$Total <= sum(Row1, Row2)
+		
+		f1e $\gets$ (Row1 / Grand$\_$Total) * Column1
+		
+		f2e $\gets$ (Row1 / Grand$\_$Total) * Column2
+		
+		f3e $\gets$ (Row1 / Grand$\_$Total) * Column3
+		
+		f4e $\gets$ (Row2 / Grand$\_$Total) * Column1
+		
+		f5e $\gets$ (Row2 / Grand$\_$Total) * Column2
+		
+		f6e $\gets$ (Row2 / Grand$\_$Total) * Column3
+		
+		\vspace{.5cm}
+		x^2$\_$test$\_$statistic = ((((foUpper1 - f1e)^2)/f1e) + (((foUpper2 - f2e)^2)/f2e) + (((foUpper3 - f3e)^2)/f3e) + (((foLower1 - f4e)^2)/f4e) + (((foLower2 - f5e)^2)/f5e) + (((foLower3 - f6e)^2)/f6e))
+		
+		\vspace{.5cm}
+		x^2$\_$test$\_$statistic = 3.79 
+	\newpage
+		\item [(b)]
+		Now calculate the p-value from the test statistic you just created (in \texttt{R}).\footnote{Remember frequency should be $>$ 5 for all cells, but let's calculate the p-value here anyway.}  What do you conclude if $\alpha = 0.1$?\\
+	
+		P$\_$Value $\gets$ pchisq(x^2$\_$test$\_$statistic, df = 2, lower.tail = F)
+		
+		P$\_$Value $\gets$ as.numeric(format(round(P$\_$Value, 2), nsmall = 2))
+		
+		P$\_$Value = 0.15 
+
+		Because the P-value $>$ 0.1, we can't reject the null hypothesis that social class and being asked for a bribe are statistically independent.
+	\vspace{2cm}
+		\item [(c)] Calculate the standardized residuals for each cell and put them in the table below.
+		\vspace{1cm}
+		
+		\begin{table}[h]
+			\centering
+			\begin{tabular}{l | c c c }
+				& Not Stopped & Bribe requested & Stopped/given warning \\
+				\\[-1.8ex] 
+				\hline \\[-1.8ex]
+				Upper class & 0.32 & -1.64 & 1.52 \\
+				\\
+				Lower class & -0.32 & 1.64  & -1.52  \\
+			\end{tabular}
+		\end{table}
+		
+		
+		\vspace{2cm}
+		\item [(d)] How might the standardized residuals help you interpret the results? 
+		 
+		Because the standardised residuals are either below and above 2 and -2 respectively, we can interpret that the variables are likely to be independent. Put otherwise, all residual values are less than the expected frequency.
+	\end{enumerate}
+	\newpage
+	
+	\section*{Question 2 (40 points): Economics}
+	Chattopadhyay and Duflo were interested in whether women promote different policies than men.\footnote{Chattopadhyay and Duflo. (2004). ``Women as Policy Makers: Evidence from a Randomized Policy Experiment in India. \textit{Econometrica}. 72 (5), 1409-1443.} Answering this question with observational data is pretty difficult due to potential confounding problems (e.g. the districts that choose female politicians are likely to systematically differ in other aspects too). Hence, they exploit a randomized policy experiment in India, where since the mid-1990s, $\frac{1}{3}$ of village council heads have been randomly reserved for women. A subset of the data from West Bengal can be found at the following link: \url{https://raw.githubusercontent.com/kosukeimai/qss/master/PREDICTION/women.csv}\\
+	
+	\noindent Each observation in the data set represents a village and there are two villages associated with one GP (i.e. a level of government is called "GP"). Figure~\ref{fig:women_desc} below shows the names and descriptions of the variables in the dataset. The authors hypothesize that female politicians are more likely to support policies female voters want. Researchers found that more women complain about the quality of drinking water than men. You need to estimate the effect of the reservation policy on the number of new or repaired drinking water facilities in the villages.
+	\vspace{.5cm}
+	\begin{figure}[h!]
+		\caption{\footnotesize{Names and description of variables from Chattopadhyay and Duflo (2004).}}
+		\vspace{.5cm}
+		\centering
+		\label{fig:women_desc}
+	\end{figure}		
+	\begin{enumerate}
+		\item [(a)] State a null and alternative (two-tailed) hypothesis. 
+		
+		H0: Female politicians support new or repaired drinking water facilities in the villages at the same rate as male politicians.
+		
+		Ha: Female politicians support new or repaired drinking water facilities in the villages more or less than males politicians.
+	
+	\vspace{2cm}
+		\item [(b)] Run a bivariate regression to test this hypothesis in \texttt{R} (include your code!).
+		
+		Regression$\_$analysis$\_$water$\_$and$\_$reserved $\gets$ lm(formula = water$\sim$ reserved, data=Indian$\_$data)
+		
+		Regression$\_$analysis$\_$water$\_$and$\_$reserved = \widehat{y} = \widehat{\beta0} + \widehat{\beta1}X1 =\widehat{y}~= 14.738 + 9.252(reserved seats)
+	
+	\vspace{2cm}
+		\item [(c)] Interpret the coefficient estimate for reservation policy.
+		 
+		The regression equation of 14.738 + 9.252(reserved seats) indicates that for each additional district with reserved seats, there are 9.252 new or repaired drinking water facilities, indicating the reserve policy has positive impacts on drinking water facilities.
+		
+		This tentatively, although somewhat indirectly, supports Chattopadhyay and Duflo's hypothesis that female politicians are more likely to support policies female voters want.
+	\end{enumerate}
+	
+\end{document}
+\usepackage{pdfpages}
